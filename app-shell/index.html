@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/fire.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link href="/src/style.css" rel="stylesheet" media="screen" />
     <title>Blazing Lit Micro Frontend Demo</title>
 
     <template id="app-layout">
       <single-spa-router containerel="#outlet">
+        <route path="catalog">
+          <application name="catalog"></application>
+        </route>
+        <route path="profile">
+          <application name="profile"></application>
+        </route>
         <route default>
           <h1>Default home view</h1>
         </route>
@@ -23,10 +30,17 @@
       }
     }
     </script>
+
     <script type="module" src="/src/main.ts"></script>
   </head>
+
   <body>
-    <nav></nav>
+    <nav>
+      <a href="/" class="mfe-nav-item">Home</a>
+      <a href="/catalog" class="mfe-nav-item">Catalog</a>
+      <a href="/profile" class="mfe-nav-item">Profile</a>
+    </nav>
     <div id="outlet"></div>
   </body>
+
 </html>

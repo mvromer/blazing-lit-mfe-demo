@@ -1,6 +1,36 @@
 @import 'sanitize.css';
 
+:root {
+  --mfe-font-sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+    segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
+    sans-serif;
+
+  --mfe-font-serif: Iowan Old Style, Apple Garamond, Baskerville,
+    Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+
+  --mfe-font-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
+    monospace;
+}
+
 body {
   display: flex;
   flex-direction: column;
+
+  font-family: var(--mfe-font-sans-serif);
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.mfe-nav-item {
+  display: inline-block;
+  padding-inline: 0.75rem;
+  text-decoration: none;
+}
+
+.mfe-nav-item:hover {
+  background-color: #eee;
 }
