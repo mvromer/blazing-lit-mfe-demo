@@ -9,10 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^2.6.1"
+    "lit": "^2.6.1",
+    "single-spa": "^5.9.4"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
     "vite": "^4.3.2"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
