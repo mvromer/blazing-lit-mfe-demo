@@ -15,3 +15,77 @@ This is not necessarily meant to demonstrate a robust and production-ready imple
 Blazor-based micro frontend but rather is a demo of what could be conceptually possible. Ideally,
 Blazor (at least its WebAssembly variant) would eventually evolve to more readily support the micro
 frontend use case.
+
+## Blazor Micro Frontend Setup
+
+The Blazor-based micro frontend is based on the `blazorwasm-empty` template. After creating the new
+project, the [Blazor.WebAssembly.SingleSpa](https://www.nuget.org/packages/Blazor.WebAssembly.SingleSpa)
+is added to incorporate a modified Blazor WebAssembly startup script that facilitates loading Blazor
+applications in single-spa.
+
+```powershell
+dotnet add package Blazor.WebAssembly.SingleSpa
+```
+
+A single-spa micro frontend must expose a JavaScript module that exports a number of lifecycle
+callbacks called by single-spa. The Blazor-based micro frontend sets up a lightweight Vite project
+configured to do a library build that ultimately produces this module. It then uses
+[Microsoft.AspNetCore.ClientAssets](https://www.nuget.org/packages/Microsoft.AspNetCore.ClientAssets/0.1.0-alpha.21528.2)
+package to integrate the Vite build process and capture its output as part of Blazor's build
+process. The following are done from the `catalog/src/CatalogApp` directory:
+
+```powershell
+mkdir js
+dotnet add package Microsoft.AspNetCore.ClientAssets
+cd js
+npm create vite@latest .
+npm install
+npm install --save single-spa lit
+npm install --save-dev npm-run-all2
+```
+
+This installs the single-spa and lit packages in the Vite project. These are for accessing type
+declarations and additional functions used to mount/unmount the Blazor micro frontend from the
+single-spa lifecycle callbacks. The npm-run-all2 will help with the integration between the Blazor
+and Vite build processes.
+
+The C# project file for the Blazor micro frontend also needs to add the following properties so that
+the Blazor build knows where the Vite project is located:
+
+```xml
+<PropertyGroup>
+  <ClientAssetsDirectory>js</ClientAssetsDirectory>
+  <ClientAssetsBuildOutputParameter>--outDir</ClientAssetsBuildOutputParameter>
+</PropertyGroup>
+```
+
+The Microsoft.AspNetCore.ClientAssets package will call one of two npm run scripts depending on if
+the Blazor build is doing a debug or a release build. To support this, add the following npm run
+scripts the Vite project's package.json:
+
+```json
+{
+  "scripts": {
+    "build:Debug": "run-s \"build -- {@} --emptyOutDir\" --",
+    "build:Release": "run-s \"build -- {@} --emptyOutDir\" --"
+  }
+}
+```
+
+These basically defer to the default `build` npm run script created when the Vite project was first
+created.
+
+In this particular demo, we register a custom element that we use when mounting the Blazor-based
+micro frontend. To support this, we need to add the Microsoft.AspNetCore.Components.CustomElements
+package:
+
+```
+dotnet add package Microsoft.AspNetCore.Components.CustomElements
+```
+
+We then need to add the following line to the Program.cs file to actually add support for the custom
+element:
+
+```csharp
+builder.RootComponents.RegisterCustomElement<App>("mfe-catalog-app");
+```
