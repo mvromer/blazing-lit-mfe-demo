@@ -67,6 +67,7 @@ body {
   flex-direction: column;
   align-items: center;
 
+  font: var(--mfe-font-body);
   color: var(--mfe-color-alabaster);
   background-color: var(--mfe-color-eerie-black);
 }
