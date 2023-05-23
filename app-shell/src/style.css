@@ -1,36 +1,153 @@
 @import 'sanitize.css';
 
-:root {
-  --mfe-font-sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir,
-    segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
-    sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Permanent+Marker&display=swap');
 
-  --mfe-font-serif: Iowan Old Style, Apple Garamond, Baskerville,
+:root {
+  --mfe-spacing-1: 0.25rem;
+
+  --mfe-text-1: 0.769rem;
+  --mfe-text-2: 1rem;
+  --mfe-text-3: 1.3rem;
+  --mfe-text-4: 1.69rem;
+  --mfe-text-5: 2.197rem;
+  --mfe-text-6: 2.856rem;
+  --mfe-text-7: 3.713rem;
+  --mfe-text-8: 4.827rem;
+
+  --mfe-line-height-1: calc(7 * var(--mfe-spacing-1));
+  --mfe-line-height-2: calc(7 * var(--mfe-spacing-1));
+  --mfe-line-height-3: calc(7 * var(--mfe-spacing-1));
+  --mfe-line-height-4: calc(7 * var(--mfe-spacing-1));
+  --mfe-line-height-5: calc(14 * var(--mfe-spacing-1));
+  --mfe-line-height-6: calc(14 * var(--mfe-spacing-1));
+  --mfe-line-height-7: calc(21 * var(--mfe-spacing-1));
+  --mfe-line-height-8: calc(21 * var(--mfe-spacing-1));
+
+  --mfe-margin-bottom: calc(7 * var(--mfe-spacing-1));
+  --mfe-margin-heading: 0 0 var(--mfe-margin-bottom);
+  --mfe-margin-body: 0 0 var(--mfe-margin-bottom);
+
+  --mfe-font-family-sans-serif: 'Chakra Petch', -apple-system,
+    BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica,
+    Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+
+  --mfe-font-family-serif: Iowan Old Style, Apple Garamond, Baskerville,
     Times New Roman, Droid Serif, Times, Source Serif Pro, serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 
-  --mfe-font-mono: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
-    monospace;
+  --mfe-font-family-mono: Menlo, Consolas, Monaco, Liberation Mono,
+    Lucida Console, monospace;
+
+  --mfe-font-h1: var(--mfe-text-8) / var(--mfe-line-height-8)
+    var(--mfe-font-family-sans-serif);
+  --mfe-font-h2: var(--mfe-text-7) / var(--mfe-line-height-7)
+    var(--mfe-font-family-sans-serif);
+  --mfe-font-h3: var(--mfe-text-6) / var(--mfe-line-height-6)
+    var(--mfe-font-family-sans-serif);
+  --mfe-font-h4: var(--mfe-text-5) / var(--mfe-line-height-5)
+    var(--mfe-font-family-sans-serif);
+  --mfe-font-h5: var(--mfe-text-4) / var(--mfe-line-height-4)
+    var(--mfe-font-family-sans-serif);
+  --mfe-font-h6: var(--mfe-text-3) / var(--mfe-line-height-3)
+    var(--mfe-font-family-sans-serif);
+
+  --mfe-font-body: var(--mfe-text-2) / var(--mfe-line-height-2)
+    var(--mfe-font-family-sans-serif);
+
+  --mfe-color-platinum: #cfdbd5;
+  --mfe-color-alabaster: #e8eddf;
+  --mfe-color-saffron: #f5cb5c;
+  --mfe-color-eerie-black: #242423;
+  --mfe-color-jet: #333533;
+  --mfe-color-night: #0d110f;
 }
 
 body {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  font-family: var(--mfe-font-sans-serif);
+  color: var(--mfe-color-alabaster);
+  background-color: var(--mfe-color-eerie-black);
+}
+
+p {
+  font: var(--mfe-font-body);
+  margin: var(--mfe-margin-body);
+}
+
+h1 {
+  font: var(--mfe-font-h1);
+  margin: var(--mfe-margin-heading);
+}
+
+#home-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#home-title {
+  display: block;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 8.157rem;
+  line-height: 8.75rem;
+}
+
+#home-hero {
+  border: 1px solid var(--mfe-color-night);
+  background-color: var(--mfe-color-jet);
+  border-radius: 8px;
+  height: calc(133 * var(--mfe-spacing-1));
+  margin-inline: auto;
+  margin-bottom: var(--mfe-margin-bottom);
+  overflow: hidden;
+
+  box-shadow: inset 0px 0px 49px -13px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: inset 0px 0px 49px -13px rgba(0, 0, 0, 0.75);
+}
+
+#home-hero img {
+  display: block;
+  margin-top: calc(-42 * var(--mfe-spacing-1));
+  margin-inline: auto;
+}
+
+#home-byline {
+  font: var(--mfe-font-h5);
+  margin-inline: auto;
+}
+
+a {
+  color: var(--mfe-color-saffron);
+  text-decoration: none;
 }
 
 nav {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  align-self: stretch;
+  background-color: var(--mfe-color-jet);
+
+  font: var(--mfe-font-h6);
+  margin-bottom: var(--mfe-margin-bottom);
+  padding-block: calc(3.5 * var(--mfe-spacing-1));
+
+  box-shadow: 12px 20px 25px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 12px 20px 25px 0px rgba(0, 0, 0, 0.2);
 }
 
 .mfe-nav-item {
-  display: inline-block;
-  padding-inline: 0.75rem;
-  text-decoration: none;
+  padding-inline: calc(6 * var(--mfe-spacing-1));
+  padding-block: calc(3.5 * var(--mfe-spacing-1));
+}
+
+.mfe-nav-item + .mfe-nav-item {
+  border-left: 1px solid var(--mfe-color-night);
 }
 
 .mfe-nav-item:hover {
-  background-color: #eee;
+  background-color: var(--mfe-color-eerie-black);
 }
