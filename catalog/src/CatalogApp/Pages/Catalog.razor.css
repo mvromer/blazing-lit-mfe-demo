@@ -1,0 +1,34 @@
+.catalog-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: calc(7 * var(--mfe-spacing-1));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mfe-color-night);
+  background-color: var(--mfe-color-jet);
+  border-radius: 8px;
+  box-shadow: inset 0px 0px 49px -13px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: inset 0px 0px 49px -13px rgba(0, 0, 0, 0.75);
+}
+
+.card:hover {
+  background-color: var(--mfe-color-eerie-black);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.card img {
+  display: block;
+  margin-bottom: calc(3.5 * var(--mfe-spacing-1));
+}
+
+.card span {
+  padding-inline: calc(3.5 * var(--mfe-spacing-1));
+}
+
+.card span:last-of-type {
+  margin-bottom: calc(3.5 * var(--mfe-spacing-1));
+}

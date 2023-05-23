@@ -1,0 +1,19 @@
+﻿@page "/"
+@using CatalogApp.Models
+@inject NavigationManager Navigation
+@inject RobotCatalog RobotCatalog
+
+<h1>Available Robots</h1>
+
+<div class="catalog-items">
+    @foreach (var robot in RobotCatalog.GetRobots())
+    {
+        <a href="/robot/@(robot.Name.ToLower())">
+            <div class="card">
+                <img src="@(robot.ImageUrl)">
+                <span>@robot.Name</span>
+                <span>Ç @robot.Price</span>
+            </div>
+        </a>
+    }
+</div>

@@ -1,0 +1,19 @@
+@page "/robot/{robotName}"
+@using CatalogApp.Models
+@inject RobotCatalog RobotCatalog
+
+<h1>@(_robot.Name)</h1>
+
+@code {
+    [Parameter]
+    public string RobotName { get; set; }
+
+    private Models.Robot _robot;
+
+    protected override void OnInitialized()
+    {
+        _robot = RobotCatalog.Get(RobotName);
+    }
+}
+
+
