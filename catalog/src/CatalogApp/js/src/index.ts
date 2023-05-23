@@ -74,6 +74,7 @@ export const bootstrap: MicroFrontendLifecycleFn = async ({
   // allow us to do some additional one-time initialization inside our Blazor micro frontend, such
   // as calling static methods that capture references to JavaScript objects we want to reference
   // from Blazor's JSInterop.
+  console.log(appBaseUri);
   await blazor.start({
     appBaseUri,
     resourceBaseUri,
