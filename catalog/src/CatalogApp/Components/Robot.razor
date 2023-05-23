@@ -2,7 +2,20 @@
 @using CatalogApp.Models
 @inject RobotCatalog RobotCatalog
 
-<h1>@(_robot.Name)</h1>
+<a href="/">← Back to catalog</a>
+<div>
+    <img src="@_robot.ImageUrl" />
+    <dl>
+        <dt>Name</dt>
+        <dd>@_robot.Name</dd>
+        <dt>Price</dt>
+        <dd>Ç @_robot.Price</dd>
+        <dt>Quality</dt>
+        <dd>@_robot.Quality</dd>
+        <dt>Description</dt>
+        <dd>@_robot.Description</dd>
+    </dl>
+</div>
 
 @code {
     [Parameter]
