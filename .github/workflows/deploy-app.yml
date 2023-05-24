@@ -1,0 +1,30 @@
+on: workflow_dispatch
+name: Deploy App
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7
+    - name: Build App Shell
+      shell: pwsh
+      working-directory: app-shell
+      run: |
+        npm install
+        npm run build
+    - name: Build Profile App
+      shell: pwsh
+      working-directory: profile
+      run: |
+        npm install
+        npm run build
+    - name: Build Catalog App
+      shell: pwsh
+      working-directory: catalog
+      run: dotnet publish -c Release -o dist
