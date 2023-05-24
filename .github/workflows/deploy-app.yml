@@ -28,3 +28,30 @@ jobs:
       shell: pwsh
       working-directory: catalog
       run: dotnet publish -c Release -o dist
+    - name: Deploy App Shell
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.APP_SHELL_DEPLOYMENT_TOKEN }}
+        action: upload
+        skip_app_build: true
+        skip_api_build: true
+        output_location: ''
+        app_location: app-shell/dist
+    - name: Deploy Profile App
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.PROFILE_APP_DEPLOYMENT_TOKEN }}
+        action: upload
+        skip_app_build: true
+        skip_api_build: true
+        output_location: ''
+        app_location: profile-app/dist
+    - name: Deploy Catalog App
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.CATALOG_APP_DEPLOYMENT_TOKEN }}
+        action: upload
+        skip_app_build: true
+        skip_api_build: true
+        output_location: ''
+        app_location: catalog-app/dist/wwwroot
