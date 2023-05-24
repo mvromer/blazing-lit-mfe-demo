@@ -27,7 +27,7 @@ jobs:
     - name: Build Catalog App
       shell: pwsh
       working-directory: catalog
-      run: dotnet publish -c Release -o dist
+      run: dotnet publish src/CatalogApp -c Release -o dist
     - name: Deploy App Shell
       uses: Azure/static-web-apps-deploy@v1
       with:
