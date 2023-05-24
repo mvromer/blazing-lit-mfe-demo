@@ -14,6 +14,42 @@ function getMountPoint(appName: string) {
   return document.getElementById(`single-spa-application:${appName}`);
 }
 
+function getResourceBaseUri() {
+  // Build the resource base URI from this JavaScript module's URL. Note that Blazor requires base
+  // URIs to have a trailing slash in order for the Blazor runtime to correctly resolve relative
+  // resource URLs referenced by the Blazor startup script.
+  const iLastSlash = import.meta.url.lastIndexOf('/');
+  return import.meta.url.substring(0, iLastSlash + 1);
+}
+
+function getDocumentStyleSheet() {
+  // Adapted from: https://developer.mozilla.org/en-US/docs/Web/API/StyleSheetList#get_all_css_rules_for_the_document_using_array_methods
+  // Doesn't include additional error handling for brevity sake.
+  //
+  // Arguably a smarter and more resource efficient way of handling this would be for the app shell
+  // to construct the CSSStyleSheet object representing the app's "global" styles that can be merged
+  // in with a micro frontend via adoptedStyleSheets. The app shell could then pass that sheet down
+  // as a custom prop in the single-spa lifecycle callbacks.
+  const sheetContents = Array.from(document.styleSheets)
+    .flatMap((sheet) => Array.from(sheet.cssRules))
+    .map((rule) => rule.cssText)
+    .join('');
+
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(sheetContents);
+  return sheet;
+}
+
+async function getBlazorStyleSheet(sheetResourceName: string) {
+  // NOTE: Error handling deliberately removed for brevity sake.
+  const resourceBaseUri = getResourceBaseUri();
+  const sheetUri = new URL(sheetResourceName, resourceBaseUri).href;
+  const sheet = new CSSStyleSheet();
+  const sheetContents = await fetch(sheetUri);
+  sheet.replaceSync(await sheetContents.text());
+  return sheet;
+}
+
 // .NET and Blazor runtime objects created by this micro frontend's startup script.
 let blazor: any = undefined;
 // @ts-ignore 'dotnet' is declared but its value is never read.
@@ -25,11 +61,7 @@ export const bootstrap: MicroFrontendLifecycleFn = async ({
   name: appName,
   appBaseUri,
 }) => {
-  // Build the resource base URI from this JavaScript module's URL. Note that Blazor requires base
-  // URIs to have a trailing slash in order for the Blazor runtime to correctly resolve relative
-  // resource URLs referenced by the Blazor startup script.
-  const iLastSlash = import.meta.url.lastIndexOf('/');
-  const resourceBaseUri = import.meta.url.substring(0, iLastSlash + 1);
+  const resourceBaseUri = getResourceBaseUri();
 
   // Import the Blazor startup script responsible for loading the .NET runtime in the browser along
   // with the actual Blazor runtime. Both runtime objects are encapsulated within the startup
@@ -96,7 +128,27 @@ export const mount: MicroFrontendLifecycleFn = async ({ name: appName }) => {
 
   const mountPoint = getMountPoint(appName);
   if (mountPoint) {
-    render(html`<mfe-catalog-app></mfe-catalog-app>`, mountPoint);
+    // In order to incorporate the Blazor micro frontend's styles, we fetch them from the resource
+    // origin. We then create a new shadow root within our mount point and add the fetched styles to
+    // the shadow root's adopted style sheets. In order to easily incorporate any "global" styles
+    // the app shell defines within the created shadow DOM, we also pull in the document's styles.
+    // We then render the Blazor micro frontend within the mount point's shadow root.
+    //
+    // NOTE: Safari users will need to be on 16.4 or later as supported for the adoptedStyleSheets
+    // API and constructible style sheets was only recently implemented.
+    //
+    // NOTE 2: This approach presumes the Blazor micro frontend defined its styles using Blazor's
+    // CSS isolation. That's not strictly necessary, and almost any style sheet that can be fetched
+    // from the resource origin can be adopted (limits like not being to use @import rules in the
+    // fetched style sheet exist currently). That said, use whatever approach makes sense for your
+    // project.
+    const shadowRoot = mountPoint.attachShadow({ mode: 'open' });
+    shadowRoot.adoptedStyleSheets = [
+      getDocumentStyleSheet(),
+      await getBlazorStyleSheet('CatalogApp.styles.css'),
+    ];
+
+    render(html`<mfe-catalog-app></mfe-catalog-app>`, shadowRoot);
   }
 };
 
