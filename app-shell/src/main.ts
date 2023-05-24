@@ -5,6 +5,8 @@ import {
   constructLayoutEngine,
 } from 'single-spa-layout';
 
+import './style.css';
+
 connectNavItems();
 loadMicroFrontends();
 
