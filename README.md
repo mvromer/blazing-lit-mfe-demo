@@ -16,6 +16,23 @@ Blazor-based micro frontend but rather is a demo of what could be conceptually p
 Blazor (at least its WebAssembly variant) would eventually evolve to more readily support the micro
 frontend use case.
 
+## Demo Parts
+
+This demo comprises three separately deployed applications:
+
+* A vanilla HTML, CSS, and JS application shell that loads the site and manages the lifecycle of
+  each micro frontend.
+* A Lit-based micro frontend that renders a user profile page.
+* A Blazor-based micro frontend that renders a catalog page. It also features client-side routing
+  internal the micro frontend that goes from a catalog view to a detail view of a specific item.
+
+## Live Demo
+
+A live instance of this demo is hosted on the free tier of Azure Static Web Apps (SWA). The app
+shell and each micro frontend are hosted on their own Azure SWA instance, so technically they are
+served from different origins. The application shell can be accessed
+[here](https://gentle-river-0e21e6610.3.azurestaticapps.net/).
+
 ## Blazor Micro Frontend Setup
 
 The Blazor-based micro frontend is based on the `blazorwasm-empty` template. This is done via the
