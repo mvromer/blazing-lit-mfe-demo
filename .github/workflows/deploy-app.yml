@@ -45,7 +45,7 @@ jobs:
         skip_app_build: true
         skip_api_build: true
         output_location: ''
-        app_location: profile-app/dist
+        app_location: profile/dist
     - name: Deploy Catalog App
       uses: Azure/static-web-apps-deploy@v1
       with:
@@ -54,4 +54,4 @@ jobs:
         skip_app_build: true
         skip_api_build: true
         output_location: ''
-        app_location: catalog-app/dist/wwwroot
+        app_location: catalog/dist/wwwroot
