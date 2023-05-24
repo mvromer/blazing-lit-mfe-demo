@@ -18,8 +18,14 @@ frontend use case.
 
 ## Blazor Micro Frontend Setup
 
-The Blazor-based micro frontend is based on the `blazorwasm-empty` template. After creating the new
-project, the [Blazor.WebAssembly.SingleSpa](https://www.nuget.org/packages/Blazor.WebAssembly.SingleSpa)
+The Blazor-based micro frontend is based on the `blazorwasm-empty` template. This is done via the
+dotnet CLI:
+
+```powershell
+dotnet new blazorwasm-empty -o CatalogApp
+```
+
+After creating the new project, the [Blazor.WebAssembly.SingleSpa](https://www.nuget.org/packages/Blazor.WebAssembly.SingleSpa)
 is added to incorporate a modified Blazor WebAssembly startup script that facilitates loading Blazor
 applications in single-spa.
 
@@ -89,3 +95,21 @@ element:
 ```csharp
 builder.RootComponents.RegisterCustomElement<App>("mfe-catalog-app");
 ```
+
+When the Blazor micro frontend needs to mount itself, it simply needs to render the
+`<mfe-catalog-app></mfe-catalog-app>` HTML to its mount point in the DOM. In this demo, I also do
+some extra work to ensure the styles defined within the Blazor WebAssembly project are also
+incorporated when the micro frontend is mounted.
+
+## Preparing a Blazor Micro Frontend for Deployment
+
+For the most part, building the Blazor-based micro frontend and preparing it for deployment should
+be no different than other standalone Blazor WebAssembly applications. Most of the work is done via
+the `dotnet publish` command:
+
+```powershell
+dotnet publish -c Release -o dist
+```
+
+The static content that needs to be uploaded is located in `dist/wwwroot`. The `index.js` file that
+needs to be loadable by single-spa is located in this `wwwroot` folder.
