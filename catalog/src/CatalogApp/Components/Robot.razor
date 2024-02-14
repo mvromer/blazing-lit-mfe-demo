@@ -19,9 +19,9 @@
 
 @code {
     [Parameter]
-    public string RobotName { get; set; }
+    public string RobotName { get; set; } = "";
 
-    private Models.Robot _robot;
+    private Models.Robot _robot = Models.Robot.Default;
 
     protected override void OnInitialized()
     {

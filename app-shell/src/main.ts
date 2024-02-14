@@ -53,10 +53,15 @@ function loadMicroFrontends() {
 
         return {
           ...resolvedProps,
-          // For this demo, we always assume a micro frontend's base URL is at <origin>/<app-name>/.
-          // This is mainly used to ensure client-side routing can get configured correctly for each
-          // micro frontend. You would typically adjust based on your actual app's needs.
-          appBaseUrl: `${baseUrl.origin}/${appName}/`,
+          // The navigation base URL is specifically needed by the Blazor WASM micro-frontend;
+          // however, it's generally useful for all micro-frontends because it defines basically
+          // the base URL for the purposes of client-side routing.
+          //
+          // We use this particular name for the prop because that's what the singleSpaBlazor
+          // framework helper will look for. Otherwise, we could have named it something different
+          // here and remapped it to navigationBaseUrl inside the Blazor WASM micro-frontend's
+          // lifecycles.js module.
+          navigationBaseUrl: `${baseUrl.origin}/${appName}/`,
         };
       },
     });

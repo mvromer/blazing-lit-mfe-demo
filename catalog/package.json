@@ -1,0 +1,9 @@
+{
+  "name": "catalog",
+  "version": "0.1.0",
+  "description": "Catalog micro-frontend",
+  "private": true,
+  "dependencies": {
+    "blazor-wasm-single-spa": "^0.4.2"
+  }
+}
