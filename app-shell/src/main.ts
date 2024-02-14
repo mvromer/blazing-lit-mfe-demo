@@ -19,7 +19,7 @@ function connectNavItems() {
 }
 
 function loadMicroFrontends() {
-  const appLayout = document.querySelector('#app-layout');
+  const appLayout = document.querySelector('#app-layout')!;
   const routes = constructRoutes(appLayout);
   const applications = constructApplications({
     routes,
@@ -34,7 +34,7 @@ function loadMicroFrontends() {
   // frontend's custom props when we call single-spa's registerApplication function. The reason for
   // this is that it allows us to specify more precisely where custom props appear in the props
   // object passed to a micro frontend's lifecycle callbacks.
-  const baseUri = new URL(document.baseURI);
+  const baseUrl = new URL(document.baseURI);
 
   applications.forEach((application) => {
     // Use the function form of custom props when registering the micro frontend's single-spa
@@ -53,10 +53,10 @@ function loadMicroFrontends() {
 
         return {
           ...resolvedProps,
-          // For this demo, we always assume a micro frontend's base URI is at <origin>/<app-name>/.
+          // For this demo, we always assume a micro frontend's base URL is at <origin>/<app-name>/.
           // This is mainly used to ensure client-side routing can get configured correctly for each
           // micro frontend. You would typically adjust based on your actual app's needs.
-          appBaseUri: `${baseUri.origin}/${appName}/`,
+          appBaseUrl: `${baseUrl.origin}/${appName}/`,
         };
       },
     });
