@@ -1,0 +1,28 @@
+﻿@page "/"
+@using OrdersApp.Models
+
+<h1>Recent Orders</h1>
+
+<MudTable Items="@Orders.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm">
+    <HeaderContent>
+        <MudTh>Order No.</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Date</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="OrderNumber">@context.OrderNumber</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Date">@context.Date</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private IEnumerable<Order> Orders = new List<Order>()
+    {
+        new(OrderNumber: 1, Description: "Zorbo", Date: new(2324, 2, 13)),
+        new(OrderNumber: 2, Description: "Pillbox", Date: new(2324, 2, 12)),
+        new(OrderNumber: 3, Description: "Lima", Date: new(2324, 1, 28)),
+        new(OrderNumber: 4, Description: "Squirt", Date: new(2324, 1, 13)),
+        new(OrderNumber: 5, Description: "MegaBox", Date: new(2324, 1, 4))
+    };
+}

@@ -2,11 +2,12 @@
 
 A proof-of-concept demonstrating experimental support for Blazor WebAssembly (WASM) micro-frontends
 loaded in a simple web app built using [single-spa](https://single-spa.js.org/). The app comprises
-three components:
+four components:
 
 * An app shell managing overall page layout and micro-frontend lifecycles
 * A Profile micro-frontend written using [Lit](https://lit.dev/)
 * A Catalog micro-frontend written using [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor)
+* An Orders micro-frontend written using Blazor and using components from [MudBlazor](https://www.mudblazor.com)
 
 ## Background
 
@@ -32,13 +33,18 @@ micro-frontend use case as detailed in
 
 ## Demo Parts
 
-This demo comprises three separately deployed applications:
+This demo comprises four separately deployed applications:
 
 * A vanilla HTML, CSS, and JS application shell that loads the site and manages the lifecycle of
   each micro-frontend.
-* A Lit-based micro frontend that renders a user profile page.
-* A Blazor-based micro frontend that renders a catalog page. It also features client-side routing
+* A Lit-based micro-frontend that renders a user profile page.
+* A Blazor WASM micro-frontend that renders a catalog page. It also features client-side routing
   internal to the micro-frontend that goes from a catalog view to a detail view of a specific item.
+* Another Blazor WASM micro-frontend that renders a table using MudBlazor, a popular component
+  library for Blazor WebAssembly applications. This uses an
+  [experimental app extension](https://www.npmjs.com/package/blazor-wasm-ext-mud-blazor) for
+  blazor-wasm-single-spa. This extension ensure global state written by MudBlazor is cleared and
+  properly restored when the micro-frontend is unmounted from and later re-mounted to the DOM.
 
 ## Live Demo
 
@@ -55,6 +61,12 @@ dotnet CLI:
 ```powershell
 dotnet new blazorwasm-empty -o CatalogApp
 ```
+
+> **NOTE:** For whatever reason, the `blazorwasm-empty` template only allows you to specify a target
+> framework up to .NET 7 whereas the `blazorwasm` template allows you to specify up to .NET 8. After
+> creating the new project and installing the necessary dependencies, the package references in the
+> project file must have their versions adjusted so that it references those Microsoft assemblies
+> that were released alongside .NET 8.
 
 After creating the new project, the [Blazor.WebAssembly.SingleSpa](https://www.nuget.org/packages/Blazor.WebAssembly.SingleSpa)
 NuGet package is added to the project. This will provide a variant of the Blazor WebAssembly start

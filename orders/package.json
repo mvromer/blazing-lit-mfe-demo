@@ -1,0 +1,10 @@
+{
+  "name": "orders",
+  "version": "0.1.0",
+  "description": "Orders micro-frontend",
+  "private": true,
+  "dependencies": {
+    "blazor-wasm-ext-mud-blazor": "^0.1.0",
+    "blazor-wasm-single-spa": "^0.4.2"
+  }
+}
