@@ -9,5 +9,5 @@ const assetBaseUrl = import.meta.url.substring(0, iLastSlash + 1);
 export const { bootstrap, mount, unmount } = singleSpaBlazor({
   appTagName: 'mfe-orders-app',
   assetBaseUrl,
-  appExtensions: [mudBlazorExtension],
+  appExtensions: [mudBlazorExtension()],
 });

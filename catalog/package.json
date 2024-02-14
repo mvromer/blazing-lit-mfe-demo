@@ -4,6 +4,6 @@
   "description": "Catalog micro-frontend",
   "private": true,
   "dependencies": {
-    "blazor-wasm-single-spa": "^0.4.2"
+    "blazor-wasm-single-spa": "^0.4.3"
   }
 }
