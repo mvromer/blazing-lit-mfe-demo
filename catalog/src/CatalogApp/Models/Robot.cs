@@ -7,4 +7,7 @@ enum Quality
     Salvage
 }
 
-record class Robot(string Name, uint Price, Quality Quality, string Description, string ImageUrl);
+record class Robot(string Name, uint Price, Quality Quality, string Description, string ImageUrl)
+{
+    public static Robot Default = new("", 0, Quality.New, "", "");
+}

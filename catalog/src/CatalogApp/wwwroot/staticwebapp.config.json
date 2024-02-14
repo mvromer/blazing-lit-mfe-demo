@@ -1,5 +1,5 @@
 {
     "globalHeaders": {
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "https://gentle-river-0e21e6610.3.azurestaticapps.net"
     }
 }

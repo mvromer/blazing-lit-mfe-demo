@@ -4,10 +4,8 @@ import type { LifeCycleFn } from 'single-spa';
 
 import './profile-app.js';
 
-// Ideally these types and the getMountPoint function would be factored into some shared JavaScript
-// package.
 type CustomAppProps = {
-  appBaseUri: string;
+  navigationBaseUrl: string;
 };
 
 type MicroFrontendLifecycleFn = LifeCycleFn<CustomAppProps>;
@@ -24,7 +22,6 @@ export const bootstrap: MicroFrontendLifecycleFn = () => {
 
 export const mount: MicroFrontendLifecycleFn = async ({ name: appName }) => {
   const mountPoint = getMountPoint(appName);
-
   if (mountPoint) {
     render(html`<mfe-profile-app></mfe-profile-app>`, mountPoint);
   }
@@ -33,6 +30,6 @@ export const mount: MicroFrontendLifecycleFn = async ({ name: appName }) => {
 export const unmount: MicroFrontendLifecycleFn = async ({ name: appName }) => {
   const mountPoint = getMountPoint(appName);
   if (mountPoint) {
-    mountPoint.innerHTML = '';
+    mountPoint.replaceChildren();
   }
 };
