@@ -96,7 +96,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 ```
 
 To define the required lifecycle hooks, lifecycles module imports the framework helper and calls its
-`singleSpaBlazor` function, exporting the hooks it returns:
+`singleSpaBlazor` function, exporting the hooks it returns. Note that the `appTagName` specified
+must match the custom element tag name registered in the call to `RegisterCustomElement`.
 
 ```javascript
 import singleSpaBlazor from 'blazor-wasm-single-spa';
